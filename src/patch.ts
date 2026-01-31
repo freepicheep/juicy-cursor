@@ -52,7 +52,7 @@ const layerMarkersPatch = (settings: AnimatedCursorSettings) => function (view: 
 	let { state } = view,
 		tableCellView: EditorView | undefined,
 		cursors: CursorMarker[] = [];
-	
+
 	if (!view.hasFocus) tableCellView = getTableCellCm(state);
 	if (tableCellView) ({ state } = tableCellView);
 	if (view === tableCellView) return cursors;
@@ -63,8 +63,12 @@ const layerMarkersPatch = (settings: AnimatedCursorSettings) => function (view: 
 		let isPrimary = range == state.selection.main,
 			className = "cm-cursor " + (isPrimary ? "cm-cursor-primary" : "cm-cursor-secondary"),
 			cursorMarker = tableCellView
-				? CursorMarker.forTableCellRange(view, tableCellView, className, range, settings.useTransform)
-				: CursorMarker.forRange(view, className, range, settings.useTransform);
+				? CursorMarker.forTableCellRange(view, tableCellView, className, range, settings.useTransform, settings.cursorHeight)
+				: CursorMarker.forRange(view, className, range, settings.useTransform, settings.cursorHeight);
+
+		// If the cursor is secondary and the range is not empty (is selecting),
+		// we should not draw the cursor.
+		if (!isPrimary && !range.empty) continue;
 
 		if (cursorMarker)
 			cursors.push(cursorMarker);

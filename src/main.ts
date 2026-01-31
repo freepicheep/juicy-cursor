@@ -7,10 +7,16 @@ import { CursorPluginInstance } from "src/typings";
 
 export interface AnimatedCursorSettings {
 	useTransform: boolean;
+	cursorWidth: string;
+	cursorHeight: string;
+	cursorColor: string;
 }
 
 export const DEFAULT_SETTINGS: AnimatedCursorSettings = {
-	useTransform: true
+	useTransform: true,
+	cursorWidth: '2px',
+	cursorHeight: '24px',
+	cursorColor: 'currentColor'
 }
 
 function iterMarkdownView(app: App, callback: (view: MarkdownView) => unknown): void {
@@ -36,6 +42,7 @@ export default class AnimatedCursorPlugin extends Plugin {
 		this.alreadyPatched = false;
 		this.addSettingTab(new AnimatedCursorSettingTab(this.app, this));
 		this.registerEditorExtension(tableCellObserver);
+		this.updateCursorStyles();
 
 		let activeEditor = this.app.workspace.activeEditor?.editor;
 		if (activeEditor) this.tryPatch(activeEditor);
@@ -55,6 +62,13 @@ export default class AnimatedCursorPlugin extends Plugin {
 
 	public async saveSettings(): Promise<void> {
 		await this.saveData(this.settings);
+		this.updateCursorStyles();
+	}
+
+	public updateCursorStyles(): void {
+		document.body.style.setProperty("--cursor-width", this.settings.cursorWidth);
+		document.body.style.setProperty("--cursor-height", this.settings.cursorHeight);
+		document.body.style.setProperty("--cursor-color", this.settings.cursorColor);
 	}
 
 	public onunload(): void {

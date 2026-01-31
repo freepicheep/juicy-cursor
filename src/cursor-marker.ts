@@ -40,8 +40,9 @@ export default class CursorMarker implements LayerMarker {
 	public readonly left: number;
 	public readonly top: number;
 	public readonly height: number;
+	public readonly cursorHeight: string;
 
-	constructor(className: string, left: number, top: number, height: number, useTransform: boolean) {
+	constructor(className: string, left: number, top: number, height: number, useTransform: boolean, cursorHeight: string = '100%') {
 		this.className = className;
 		// Round the position and the height avoiding using new marker upon mere
 		// fractional difference.
@@ -49,6 +50,7 @@ export default class CursorMarker implements LayerMarker {
 		this.top = Math.round(top);
 		this.height = Math.round(height);
 		this.useTransform = useTransform;
+		this.cursorHeight = cursorHeight;
 	}
 
 	public draw(): HTMLElement {
@@ -76,7 +78,10 @@ export default class CursorMarker implements LayerMarker {
 			this.top == other.top &&
 			this.height == other.height &&
 			this.className == other.className &&
-			this.useTransform == other.useTransform
+			this.height == other.height &&
+			this.className == other.className &&
+			this.useTransform == other.useTransform &&
+			this.cursorHeight == other.cursorHeight
 		);
 	}
 
@@ -88,7 +93,7 @@ export default class CursorMarker implements LayerMarker {
 	 * @param range `SelectionRange` that will be calculated and drawn.
 	 * @param useTransform If true, use CSS property `transform` instead.
 	 */
-	public static forRange(view: EditorView, className: string, range: SelectionRange, useTransform: boolean): CursorMarker | null {
+	public static forRange(view: EditorView, className: string, range: SelectionRange, useTransform: boolean, cursorHeight: string = '100%'): CursorMarker | null {
 		let cursorPos = view.coordsAtPos(range.head, range.assoc || 1);
 		if (!cursorPos) return null;
 		let baseCoords = getBaseCoords(view);
@@ -97,7 +102,8 @@ export default class CursorMarker implements LayerMarker {
 			cursorPos.left - baseCoords.left,
 			cursorPos.top - baseCoords.top,
 			cursorPos.bottom - cursorPos.top,
-			useTransform
+			useTransform,
+			cursorHeight
 		);
 	}
 
@@ -115,7 +121,8 @@ export default class CursorMarker implements LayerMarker {
 		tableCellView: EditorView,
 		className: string,
 		range: SelectionRange,
-		useTransform: boolean
+		useTransform: boolean,
+		cursorHeight: string = '100%'
 	): CursorMarker | null {
 		let cursorPos = tableCellView.coordsAtPos(range.head, range.assoc || 1);
 		if (!cursorPos) return null;
@@ -125,7 +132,8 @@ export default class CursorMarker implements LayerMarker {
 			cursorPos.left - baseCoords.left,
 			cursorPos.top - baseCoords.top,
 			cursorPos.bottom - cursorPos.top,
-			useTransform
+			useTransform,
+			cursorHeight
 		);
 	}
 
@@ -136,15 +144,26 @@ export default class CursorMarker implements LayerMarker {
 	private adjust = (cursorEl: HTMLElement): void => {
 		// Hack to smooth the movement and remove jittering
 		requestAnimationFrame(() => {
+			let targetHeight = this.height;
+			if (this.cursorHeight.endsWith('px')) {
+				targetHeight = parseFloat(this.cursorHeight);
+			} else if (this.cursorHeight.endsWith('%')) {
+				targetHeight = this.height * (parseFloat(this.cursorHeight) / 100);
+			}
+
+			// Center the cursor vertically
+			let offset = (this.height - targetHeight) / 2;
+			let top = this.top + offset;
+
 			if (this.useTransform) cursorEl.setCssStyles({
-				transform: `translateX(${this.left}px) translateY(${this.top}px)`
+				transform: `translateX(${this.left}px) translateY(${top}px)`
 			});
 			else cursorEl.setCssStyles({
 				left: this.left + "px",
-				top: this.top + "px"
+				top: top + "px"
 			});
-	
-			cursorEl.setCssStyles({ height: this.height + "px" });
+
+			cursorEl.setCssStyles({ height: targetHeight + "px" });
 		})
 	}
 

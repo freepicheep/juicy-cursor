@@ -38,13 +38,20 @@ settings:
 	--cursor-blink-rate: 1000ms;
 	--cursor-blink-count: 10;
 	--cursor-blink-easing: ease-in-out;
+	--cursor-width: 4px;
+	--cursor-height: 38px;
+	--cursor-color: currentColor;
 }
 
 @keyframes cm-cursor-blink {
-	0%, 40% {
+
+	0%,
+	40% {
 		opacity: 0;
 	}
-	80%, 100% {
+
+	80%,
+	100% {
 		opacity: 1;
 	}
 }
@@ -81,7 +88,9 @@ settings:
 	transition-property: transform, top, left;
 	transition-duration: var(--cursor-move-speed);
 	transition-timing-function: var(--cursor-move-easing);
-	border-left-width: 2px;
+	border-left-width: var(--cursor-width);
+	height: var(--cursor-height);
+	border-left-color: var(--cursor-color);
 }
 
 .cm-cursorLayer.cm-overTableCell .cm-cursor,

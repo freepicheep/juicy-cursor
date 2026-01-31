@@ -23,6 +23,39 @@ export class AnimatedCursorSettingTab extends PluginSettingTab {
 					this.plugin.saveSettings();
 				})
 			);
+
+		new Setting(this.containerEl)
+			.setName("Cursor Width")
+			.setDesc("The width of the cursor (e.g. 2px, 5px)")
+			.addText(text => text
+				.setValue(this.plugin.settings.cursorWidth)
+				.onChange(val => {
+					this.plugin.settings.cursorWidth = val;
+					this.plugin.saveSettings();
+				})
+			);
+
+		new Setting(this.containerEl)
+			.setName("Cursor Height")
+			.setDesc("The height of the cursor (e.g. 100%, 20px)")
+			.addText(text => text
+				.setValue(this.plugin.settings.cursorHeight)
+				.onChange(val => {
+					this.plugin.settings.cursorHeight = val;
+					this.plugin.saveSettings();
+				})
+			);
+
+		new Setting(this.containerEl)
+			.setName("Cursor Color")
+			.setDesc("The color of the cursor (e.g. #ff0000, red, currentColor)")
+			.addText(text => text
+				.setValue(this.plugin.settings.cursorColor)
+				.onChange(val => {
+					this.plugin.settings.cursorColor = val;
+					this.plugin.saveSettings();
+				})
+			);
 	}
 
 	public hide(): void {
