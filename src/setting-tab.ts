@@ -56,6 +56,28 @@ export class AnimatedCursorSettingTab extends PluginSettingTab {
 					this.plugin.saveSettings();
 				})
 			);
+
+		new Setting(this.containerEl)
+			.setName("Cursor Radius")
+			.setDesc("The radius of the cursor border (e.g. 0px, 5px)")
+			.addText(text => text
+				.setValue(this.plugin.settings.cursorRadius)
+				.onChange(async (val) => {
+					this.plugin.settings.cursorRadius = val;
+					await this.plugin.saveSettings();
+				})
+			);
+
+		new Setting(this.containerEl)
+			.setName("Cursor Opacity")
+			.setDesc("The opacity of the cursor (0-100)")
+			.addText(text => text
+				.setValue(this.plugin.settings.cursorOpacity)
+				.onChange(async (val) => {
+					this.plugin.settings.cursorOpacity = val;
+					await this.plugin.saveSettings();
+				})
+			);
 	}
 
 	public hide(): void {

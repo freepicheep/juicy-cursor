@@ -10,13 +10,17 @@ export interface AnimatedCursorSettings {
 	cursorWidth: string;
 	cursorHeight: string;
 	cursorColor: string;
+	cursorRadius: string;
+	cursorOpacity: string;
 }
 
 export const DEFAULT_SETTINGS: AnimatedCursorSettings = {
 	useTransform: true,
 	cursorWidth: '2px',
 	cursorHeight: '24px',
-	cursorColor: 'currentColor'
+	cursorColor: 'currentColor',
+	cursorRadius: '0px',
+	cursorOpacity: '100'
 }
 
 function iterMarkdownView(app: App, callback: (view: MarkdownView) => unknown): void {
@@ -69,6 +73,8 @@ export default class AnimatedCursorPlugin extends Plugin {
 		document.body.style.setProperty("--cursor-width", this.settings.cursorWidth);
 		document.body.style.setProperty("--cursor-height", this.settings.cursorHeight);
 		document.body.style.setProperty("--cursor-color", this.settings.cursorColor);
+		document.body.style.setProperty("--cursor-radius", this.settings.cursorRadius);
+		document.body.style.setProperty("--cursor-opacity", this.settings.cursorOpacity);
 	}
 
 	public onunload(): void {

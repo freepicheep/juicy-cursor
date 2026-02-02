@@ -41,6 +41,8 @@ settings:
 	--cursor-width: 4px;
 	--cursor-height: 38px;
 	--cursor-color: currentColor;
+	--cursor-radius: 0px;
+	--cursor-opacity: 100;
 }
 
 @keyframes cm-cursor-blink {
@@ -91,6 +93,8 @@ settings:
 	border-left-width: var(--cursor-width);
 	height: var(--cursor-height);
 	border-left-color: var(--cursor-color);
+	border-radius: var(--cursor-radius);
+	opacity: calc(var(--cursor-opacity) / 100);
 }
 
 .cm-cursorLayer.cm-overTableCell .cm-cursor,
