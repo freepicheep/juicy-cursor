@@ -7,6 +7,7 @@ import { CursorPluginInstance } from "src/typings";
 
 export interface AnimatedCursorSettings {
 	useTransform: boolean;
+	matchHeadingColor: boolean;
 	cursorWidth: string;
 	cursorHeight: string;
 	cursorColor: string;
@@ -16,6 +17,7 @@ export interface AnimatedCursorSettings {
 
 export const DEFAULT_SETTINGS: AnimatedCursorSettings = {
 	useTransform: true,
+	matchHeadingColor: false,
 	cursorWidth: '2px',
 	cursorHeight: '24px',
 	cursorColor: 'currentColor',
@@ -46,6 +48,7 @@ export default class AnimatedCursorPlugin extends Plugin {
 		this.alreadyPatched = false;
 		this.addSettingTab(new AnimatedCursorSettingTab(this.app, this));
 		this.registerEditorExtension(tableCellObserver);
+		this.registerEvent(this.app.workspace.on("css-change", () => this.refreshCursorLayers()));
 		this.updateCursorStyles();
 
 		let activeEditor = this.app.workspace.activeEditor?.editor;
@@ -61,12 +64,20 @@ export default class AnimatedCursorPlugin extends Plugin {
 	}
 
 	public async loadSettings(): Promise<void> {
-		this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
+		let savedSettings = await this.loadData();
+		if (
+			savedSettings &&
+			!("matchHeadingColor" in savedSettings) &&
+			typeof savedSettings.matchTextColor == "boolean"
+		) savedSettings.matchHeadingColor = savedSettings.matchTextColor;
+
+		this.settings = Object.assign({}, DEFAULT_SETTINGS, savedSettings);
 	}
 
 	public async saveSettings(): Promise<void> {
 		await this.saveData(this.settings);
 		this.updateCursorStyles();
+		this.refreshCursorLayers();
 	}
 
 	public updateCursorStyles(): void {
@@ -75,6 +86,17 @@ export default class AnimatedCursorPlugin extends Plugin {
 		document.body.style.setProperty("--cursor-color", this.settings.cursorColor);
 		document.body.style.setProperty("--cursor-radius", this.settings.cursorRadius);
 		document.body.style.setProperty("--cursor-opacity", this.settings.cursorOpacity);
+	}
+
+	public refreshCursorLayers(): void {
+		let cursorSpec = this.cursorPlugin?.spec;
+		if (!cursorSpec) return;
+
+		iterMarkdownView(this.app, view => {
+			let layer = view.editor.cm.plugin(cursorSpec);
+			if (!layer) return;
+			view.editor.cm.requestMeasure(layer.measureReq);
+		});
 	}
 
 	public onunload(): void {

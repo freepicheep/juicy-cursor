@@ -25,6 +25,20 @@ export class AnimatedCursorSettingTab extends PluginSettingTab {
 			);
 
 		new Setting(this.containerEl)
+			.setName("Match current heading color")
+			.setDesc(
+				"When enabled, the cursor uses the current section heading's color. " +
+				"For example, text under an H2 heading uses the H2 color until another heading takes over."
+			)
+			.addToggle(toggle => toggle
+				.setValue(this.plugin.settings.matchHeadingColor)
+				.onChange(val => {
+					this.plugin.settings.matchHeadingColor = val;
+					this.plugin.saveSettings();
+				})
+			);
+
+		new Setting(this.containerEl)
 			.setName("Cursor Width")
 			.setDesc("The width of the cursor (e.g. 2px, 5px)")
 			.addText(text => text
