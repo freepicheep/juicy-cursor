@@ -1,90 +1,27 @@
-# Animated Cursor - Obsdian Plugin
+# Juicy Cursor for Obsidian
 
-![latest-version] ![current-downloads] ![current-stars] ![open-issues]
+If you come from the world of excellent markdown editors like iAWriter or Paper, you probably miss that big juicy cursor. For a while I could barely use Obsidian because it didn't have that cursor. Now I have it and I want you to have it as well. Building on the excellent work of [Sheva Ihza] in the [Animated Cursor] plugin, Juicy Cursor gives you:
+1. A smooth cursor (think VSCode, Paper Markdown Editor).
+2. Adjust the height and thickness of the cursor.
+3. Customize the cursor to have rounded borders or square borders.
+4. Have the cursor color match the current heading color (inspired by iA Presenter).
+5. Set a custom cursor color.
+6. Adjust cursor opacity.
 
-Give your cursor a simple, yet smooth, move animation. Inspired by Microsoft Office and VSCode smooth cursor.
+## Attribution
 
-![animated-cursor.gif](./docs/assests/animated-cursor.gif)
+This plugin was originally forked from [Sheva Ihza]'s [Animated Cursor] plugin. I reworked different parts of it to add the features I wanted. According to Sheva, this plugin includes some of the source codes developed by [Marijnh Haverbeke] and the others at [CodeMirror], with some modifications. All their works are licensed under MIT.
 
-> [!WARNING]
-> 
-> Read **caveat** section below before installing this plugin!
-
-## 🚀 Features
-
-- Move and blink animation for the cursor.
-- Work on both hovering page preview and canvas.
-- Support multi-cursor.
-- Adjustable cursor speed and blink duration (via [Style Settings][style-settings] plugin).
-
-## 🎨 What makes it different?
-
-- **Works as native cursor**. This plugin patch existing Obsidian cursor, avoiding any unintended calculations. The same plugin before creates another cursor instance, yet still let Obsidian calculate its own cursor.
-- **Hardly relies on [CodeMirror][] API**. It's the secret of the consistency of the cursor behavior. Thus, it doesn't face any meaningful problems with multi-cursor, canvas, etc.
-
-## 📦 Installation
-
-- Manual
-    - Create a folder named `animated-cursor` under `YOUR_VAULT_NAME/.obsidian/plugins`.
-    - Place `manifest.json`, `main.js`, and `style.css` from the latest release into the folder.
-    - Enable it through the "Community plugin" setting tab.
-- In-app
-    - Open settings.
-    - Choose "Community plugins" setting tab.
-    - Turn off "Restricted mode" if it was enabled before.
-    - Click "Browse" at "Community plugins" item.
-    - Type "Animated Cursor" in the search box.
-    - Install and enable it.
-- Using [BRAT][].
-
-## ✍️ Usage
-
-Simply move the cursor by pressing arrow keys, clicking or dragging using your mouse. The cursor will stop blinking while it's moving.
-
-## ⚙️ Adjustment
-
-Via [Style Settings][style-settings] plugin you can:
-- adjust the cursor speed in miliseconds,
-- adjust the blink rate in miliseconds,
-- set the blink count in a sequence,
-- toggle infinity blinking.
-
-Additionally, in the "Animated Cursor" plugin settings, you have an option to make the cursor move slightly more smoothly:
-- If turned on, move transition uses `transform` property, but the cursor seems to appear blurry.
-- If turned off, it uses `top` and `left` properties.
-
-> [!Note]
->
-> You can disable the blink by adjust the blink count to zero.
-
-## ⚠️ Caveat
-
-Because this plugin uses DOM to draw the cursor, it could -_probably_- **cost expensive performance** due to frequently layout recomputation, especially when you repeatedly move the cursor.
-
-## 🐞 Known Bugs
-
-- Buggy multi-cursors on the table.
-- ~~Flicker/jitter effect occurs when the cursor is continously moved by holding the arrow keys.~~
-- ~~Weird behavior when move the cursor outside the table.~~
-
-Feel free to let me know if you find any bugs...
-
-## ©️ Attribution
-
-This plugin includes some of the source codes developed by [Marijnh Haverbeke][marijnh] and the others at [CodeMirror][], with some modifications. All their works are licensed under MIT.
-
-## 🙏 Acknowledgment
+## Acknowledgment
 
 Thanks to:
+- [Sheva Ihza][] for figuring out how to get a big smooth cursor in Obsidian with [Animated Cursor].
 - [VSCode](https://github.com/microsoft/vscode) for the smooth cursor concept.
 - [CodeMirror][], [Marijnh][], and its community.
 
 [CodeMirror]: https://codemirror.net
-[Marijnh]: https://github.com/marijnh
+[Marijnh Haverbeke]: https://github.com/marijnh
+[Sheva Ihza]: https://github.com/kotaindah55
 [style-settings]: https://github.com/mgmeyers/obsidian-style-settings
 [BRAT]: https://github.com/TfTHacker/obsidian42-brat
-
-[latest-version]: https://img.shields.io/github/manifest-json/v/kotaindah55/animated-cursor?label=version&link=https%3A%2F%2Fgithub.com%2Fkotaindah55%2Fanimated-cursor%2Freleases
-[current-downloads]: https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fgithub.com%2Fobsidianmd%2Fobsidian-releases%2Fraw%2Frefs%2Fheads%2Fmaster%2Fcommunity-plugin-stats.json&query=%24.animated-cursor.downloads&label=downloads&color=green
-[current-stars]: https://img.shields.io/github/stars/kotaindah55/animated-cursor?style=flat&link=https%3A%2F%2Fgithub.com%2Fkotaindah55%2Fanimated-cursor%2Fstargazers
-[open-issues]: https://img.shields.io/github/issues-search?query=repo%3Akotaindah55%2Fanimated-cursor%20is%3Aopen&label=open%20issues&color=red&link=https%3A%2F%2Fgithub.com%2Fkotaindah55%2Fanimated-cursor%2Fissues
+[Animated Cursor]: https://github.com/kotaindah55/animated-cursor

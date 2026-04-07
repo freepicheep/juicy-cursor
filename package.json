@@ -1,7 +1,7 @@
 {
-	"name": "animated-cursor",
-	"version": "1.3.4",
-	"description": "Simple yet smooth animated cursor.",
+	"name": "juicy-cursor",
+	"version": "1.0.0",
+	"description": "Fully customizable smooth cursor for Obsidian.",
 	"main": "main.js",
 	"scripts": {
 		"dev": "npx tsx scripts/esbuild.config.mts",
@@ -15,7 +15,7 @@
 	"keywords": [
 		"obsidian-plugin"
 	],
-	"author": "kotaindah55",
+	"author": "freepicheep",
 	"license": "MIT",
 	"devDependencies": {
 		"@codemirror/state": "^6.5.2",

@@ -194,13 +194,13 @@ function getHeadingColorElement(view: EditorView, level: number): HTMLElement | 
 		headingColorProbeCache.set(view, probe);
 	}
 
-	let probeHeadingEl = probe.querySelector(`.animated-cursor-heading-probe-level-${level}`);
+	let probeHeadingEl = probe.querySelector(`.juicy-cursor-heading-probe-level-${level}`);
 	return probeHeadingEl instanceof HTMLElement ? probeHeadingEl : null;
 }
 
 function createHeadingColorProbe(view: EditorView): HTMLElement {
 	let probe = createDiv({
-		cls: "cm-content animated-cursor-heading-probe"
+		cls: "cm-content juicy-cursor-heading-probe"
 	});
 
 	probe.ariaHidden = "true";
@@ -227,7 +227,7 @@ function createHeadingColorProbe(view: EditorView): HTMLElement {
 		});
 
 		lineEl.createSpan({
-			cls: `cm-header cm-header-${level} animated-cursor-heading-probe-level-${level}`
+			cls: `cm-header cm-header-${level} juicy-cursor-heading-probe-level-${level}`
 		}, span => {
 			span.textContent = `Heading ${level}`;
 		});
