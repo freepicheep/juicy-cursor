@@ -17,7 +17,7 @@ This plugin was originally forked from [Sheva Ihza]'s [Animated Cursor] plugin. 
 Thanks to:
 - [Sheva Ihza][] for figuring out how to get a big smooth cursor in Obsidian with [Animated Cursor].
 - [VSCode](https://github.com/microsoft/vscode) for the smooth cursor concept.
-- [CodeMirror][], [Marijnh][], and its community.
+- [CodeMirror][], [Marijnh Haverbeke], and its community.
 
 [CodeMirror]: https://codemirror.net
 [Marijnh Haverbeke]: https://github.com/marijnh
